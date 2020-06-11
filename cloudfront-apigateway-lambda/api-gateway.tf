@@ -56,11 +56,6 @@ resource "aws_apigatewayv2_stage" "stage" {
   }
 }
 
-data "aws_acm_certificate" "valid_cert" {
-  domain   = "${var.cert_subdomain}.${var.hosted_zone}"
-  statuses = ["ISSUED"]
-}
-
 data "aws_route53_zone" "parent_zone" {
   name  = "${var.hosted_zone}."
 }

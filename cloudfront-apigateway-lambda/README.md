@@ -56,15 +56,17 @@ parameter, i.e.
 
     terraform init --backend-config=backend/backend.production.tfvars
 
-Where in this case the envname would be production, so you would start the process using;
-
-    make apply --ENVNAME production --ENVTYPE production
-
-or a similar.
-
 N.B. You will need to have a blank backend providers block in your terraform code, this will be in the providers.tf file i.e.;
 
     terraform {
         backend "s3" {
         }
     }
+
+## How to run
+
+Where in this case the envname would be production, so you would start the process using;
+
+    make apply --ENVNAME production --ENVTYPE production
+
+or a similar.

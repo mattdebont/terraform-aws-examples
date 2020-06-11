@@ -81,39 +81,3 @@ resource "aws_apigatewayv2_domain_name" "api_domain" {
     security_policy = "TLS_1_2"
   }
 }
-
-resource "aws_acm_certificate" "cert" {
-  domain_name       = "${var.subdomain}.${var.hosted_zone}"
-  validation_method = "DNS"
-
-  tags              = "${var.default_tags}"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "aws_route53_record" "cert_validation" {
-  name    = "${aws_acm_certificate.cert.domain_validation_options.0.resource_record_name}"
-  type    = "${aws_acm_certificate.cert.domain_validation_options.0.resource_record_type}"
-  zone_id = "${data.aws_route53_zone.parent_zone.zone_id}"
-  records = ["${aws_acm_certificate.cert.domain_validation_options.0.resource_record_value}"]
-  ttl     = 60
-}
-
-resource "aws_acm_certificate_validation" "cert" {
-  certificate_arn         = "${aws_acm_certificate.cert.arn}"
-  validation_record_fqdns = ["${aws_route53_record.cert_validation.fqdn}"]
-}
-
-resource "aws_route53_record" "api_record" {
-  name    = "${var.subdomain}.${var.hosted_zone}"
-  type    = "A"
-  zone_id = "${data.aws_route53_zone.parent_zone.id}"
-
-  alias {
-    evaluate_target_health  = false
-    name                    = "${aws_apigatewayv2_domain_name.api_domain.domain_name}"
-    zone_id                 = "${aws_apigatewayv2_domain_name.api_domain.hosted_zone_id}"
-  }
-}
