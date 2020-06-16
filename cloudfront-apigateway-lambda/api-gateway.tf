@@ -91,7 +91,8 @@ resource "aws_cloudfront_distribution" "api_fronting" {
   enabled                 = true
 
   origin {
-    domain_name           = "${aws_apigatewayv2_api.api.api_endpoint}"
+    # Currently the api_endpoint returns https://... which we dont want here
+    domain_name           = replace(aws_apigatewayv2_api.api.api_endpoint, "https://", "")
     origin_id             = "${aws_apigatewayv2_api.api.name}-origin"
     origin_path           = "/${aws_apigatewayv2_stage.stage.name}"
     
