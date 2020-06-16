@@ -1,10 +1,14 @@
 envname = "production"
 envtype = "production"
+region = "eu-west-1"
 
-s3_artefact_bucket = "lambda_artefacts_bucket"
-s3_lambda_function_path = "hello_world_example/hello_world_example_0.0.1.zip"
+s3_artefact_bucket = "lambda-artefacts-bucket"
+s3_lambda_function_path = "hello-world-example/hello-world-example-0.0.1.zip"
 
-subdomain = "apigateway_lambda_prod_template"
+lambda_handler = "app.lambdaHandler"
+lambda_runtime = "nodejs12.x"
+
+subdomain = "prod-template"
 cert_subdomain = "*"
 hosted_zone = "example.com"
 function_name = "apigateway_lambda"

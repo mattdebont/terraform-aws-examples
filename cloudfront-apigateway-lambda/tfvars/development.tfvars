@@ -1,8 +1,12 @@
 envname = "development"
 envtype = "development"
+region = "eu-west-1"
 
 s3_artefact_bucket = "lambda-artefacts-bucket"
 s3_lambda_function_path = "hello-world-example/hello-world-example-0.0.1.zip"
+
+lambda_handler = "app.lambdaHandler"
+lambda_runtime = "nodejs12.x"
 
 subdomain = "dev-template"
 hosted_zone = "example.com"
